@@ -9,10 +9,12 @@ import { useCustomAuthContext } from "../context/AuthContext";
 import Pagination from "../components/Pagination";
 
 const Home = () => {
-  const [searchText, setSearchText] = useState();
+  const [searchText, setSearchText] = useState("beşiktaş");
   const [newData, setNewData] = useState();
   const [readMore, setReadMore] = useState(false);
-
+//   //! PAGINATION
+const [currentPage,setCurrentPage] =useState(1)
+const [newsPerPage,setNewsPerPage] =useState(9)
 
 
 
@@ -26,13 +28,13 @@ const Home = () => {
   //! RESTAPI👇
 
   const getnewsDataFromApi = async () => {
-
+    // const API_KEY = process.env.REACT_APP_apiKey
     const API_KEY = "f3bec0d572254c0c95fa46e72a065627";
     let url = `https://newsapi.org/v2/everything?
 q=${searchText}&page=1&sortBy=publishedAt&apiKey=${API_KEY}`;
     if (searchText) {
       try {
-        //   const response = await axios.get(url);
+       
         const { data } = await axios.get(url);
         setNewData(data.articles);
 
@@ -45,13 +47,9 @@ q=${searchText}&page=1&sortBy=publishedAt&apiKey=${API_KEY}`;
     }
   };
 
-// useEffect(() => {
-//   getnewsDataFromApi();
-// }, [])
 
-//   //! PAGINATION
-  const [currentPage,setCurrentPage] =useState(1)
-  const [newsPerPage,setNewsPerPage] =useState(9)
+
+
    
 //? GET CURRENT POST
 
@@ -68,29 +66,17 @@ console.log(totalPages);  //100
 
 const paginate=(number)=>setCurrentPage(number)
 
-  // // //! FİLTER
 
-  // const newList =currentNews.filter((news)=>{
-  //   news.source.name.includes(searchText)
-  // })
 
-  // // const handleChange =(e)=>{
-  // //   if(e.target.value==""){
-  // //     setNewData(newData)
-  // //     return
-  // //   }
-  // //   const allNews =newData.filter((item)=>item.source.name.toLowerCase().includes(e.target.value.toLowerCase()))
-  // //   setNewData(allNews)
+  
 
-  // // }
-
-  // //
+  
 
   //! SUBMIT
   const handleSubmit = (e) => {
     e.preventDefault();
     getnewsDataFromApi();
-    setSearchText("");
+  
   };
 
   return (
@@ -141,7 +127,7 @@ const paginate=(number)=>setCurrentPage(number)
               <div className="card-body">
                 <h5 className="card-title">{title} </h5>
                 <p className="card-text">
-                  {readMore ? description : description.slice(0, 100) + "..."}
+                  {readMore ? description : description.slice(0, 70) + "..."}
                   <button
                     className="border border-0 fw-bolder text-capitalize bg-white text-dark"
                     onClick={() => setReadMore(!readMore)}
