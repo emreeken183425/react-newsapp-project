@@ -73,7 +73,7 @@ Favorite products are listed on the favorite page and there is a button to remov
 
 To clone and run this application, you'll need Git
 ```
-# Clone this repository ($ git clone https://github.com/)
+# Clone this repository ($ git clone  https://github.com/emreeken183425/react-newsapp-project.git)
 > run command npm install
 > Open the runserver
 ```
