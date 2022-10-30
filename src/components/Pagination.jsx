@@ -20,10 +20,10 @@ const Paginate = ({newsPerPage,totalPages,paginate}) => {
     paginate(activePage);
   }, [activePage, paginate]);
 
-  
+
   return (
     <div>
-      <Pagination className='mt-4 d-flex justify-content-center  '>{items}</Pagination>
+      <Pagination className='mt-4 d-flex justify-content-center '>{items}</Pagination>
     </div>
   );
 };

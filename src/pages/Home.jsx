@@ -12,9 +12,20 @@ const Home = () => {
   const [searchText, setSearchText] = useState("beşiktaş");
   const [newData, setNewData] = useState();
   const [readMore, setReadMore] = useState(false);
-//   //! PAGINATION
-const [currentPage,setCurrentPage] =useState(1)
-const [newsPerPage,setNewsPerPage] =useState(9)
+  //! PAGINATION
+  const [currentPage,setCurrentPage] =useState(1)
+  const [newsPerPage,setNewsPerPage] =useState(9)
+
+//? GET CURRENT NEWS
+
+const indexOfLastNews=currentPage*newsPerPage  // last pages
+const indexOfFirstNews=indexOfLastNews-newsPerPage //first pages
+const currentNews=newData?.slice(indexOfFirstNews,indexOfLastNews) //9 data
+const totalPages=newData?.length / newsPerPage ;
+console.log(totalPages);  
+
+const paginate=(number)=>setCurrentPage(number) // updating pages
+
 
 
 
@@ -28,13 +39,13 @@ const [newsPerPage,setNewsPerPage] =useState(9)
   //! RESTAPI👇
 
   const getnewsDataFromApi = async () => {
-    // const API_KEY = process.env.REACT_APP_apiKey
+
     const API_KEY = "f3bec0d572254c0c95fa46e72a065627";
     let url = `https://newsapi.org/v2/everything?
 q=${searchText}&page=1&sortBy=publishedAt&apiKey=${API_KEY}`;
     if (searchText) {
       try {
-       
+        //   const response = await axios.get(url);
         const { data } = await axios.get(url);
         setNewData(data.articles);
 
@@ -47,36 +58,25 @@ q=${searchText}&page=1&sortBy=publishedAt&apiKey=${API_KEY}`;
     }
   };
 
+// useEffect(() => {
+//   getnewsDataFromApi();
+// }, [])
 
 
 
-   
-//? GET CURRENT POST
+  // // //! FİLTER
 
-const indexOfLastNews=currentPage*newsPerPage  
-console.log(indexOfLastNews);
-const indexOfFirstNews=indexOfLastNews-newsPerPage
-console.log(indexOfFirstNews);
-const currentNews=newData?.slice(indexOfFirstNews,indexOfLastNews) //12 veri geldi
-console.log(currentNews);
+  // const newList =currentNews.filter((news)=>{
+  //   news.source.name.includes(searchText)
+  // })
 
 
-const totalPages=newData?.length / newsPerPage ;
-console.log(totalPages);  //100
-
-const paginate=(number)=>setCurrentPage(number)
-
-
-
-  
-
-  
 
   //! SUBMIT
   const handleSubmit = (e) => {
     e.preventDefault();
-    getnewsDataFromApi();
-  
+    getnewsDataFromApi(); 
+   
   };
 
   return (
@@ -127,7 +127,7 @@ const paginate=(number)=>setCurrentPage(number)
               <div className="card-body">
                 <h5 className="card-title">{title} </h5>
                 <p className="card-text">
-                  {readMore ? description : description.slice(0, 70) + "..."}
+                  {readMore ? description : description.slice(0, 100) + "..."}
                   <button
                     className="border border-0 fw-bolder text-capitalize bg-white text-dark"
                     onClick={() => setReadMore(!readMore)}
