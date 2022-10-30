@@ -1,7 +1,6 @@
 import React from "react";
 import { useLocation, Link,useNavigate } from "react-router-dom";
-import useCustomAuthContext from '../context/AuthContext'
-
+import { useCustomAuthContext } from "../context/AuthContext";
 
 
 const DetailPage = () => {
@@ -54,7 +53,6 @@ const DetailPage = () => {
                   Add Favourite
                 </button>
                 <li className="list-group-item ">
-              
                 <div  className="link text-decoration-underline" onClick={()=>navigate("/articles",{state:state.url})}>News Source</div>
               </li>
               </div>

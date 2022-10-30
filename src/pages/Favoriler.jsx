@@ -48,7 +48,7 @@ const handleRemoveFavourites =()=>{setfavourites("")}
                 <li className="list-group-item">{publishedAt.slice(0, 10)} </li>
                 <li className="list-group-item">{name} </li>
               </ul>
-              <div className="card-body  ">
+              <div className="card-body">
                 <button
                   type="submit"
                   className="btn btn-primary me-4 "
