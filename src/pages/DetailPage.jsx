@@ -1,20 +1,24 @@
 import React from "react";
-import { useLocation, Link,useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useCustomAuthContext } from "../context/AuthContext";
-
+import { toastSuccessNotify } from "../helper/ToastNotify";
+import Share from "../components/Share";
 
 const DetailPage = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { state } = useLocation();
 
-  const {favourites,setfavourites } =useCustomAuthContext()
-  console.log(state);
+  const { favourites, setfavourites } = useCustomAuthContext();
 
-  const handleFavourite =(state)=>{
+
+  const handleFavourite = (state) => {
+    console.log(state);
     setfavourites([...favourites,state])
-    navigate("/favorite")
-  }
-  console.log(favourites)
+    toastSuccessNotify("Favourite added");
+    navigate("/favorite");
+   
+  };
+  console.log(favourites);
   return (
     <div className="container py-5">
       <div className="card mb-3">
@@ -35,9 +39,8 @@ const DetailPage = () => {
               <li className="list-group-item">
                 {state.publishedAt.slice(0, 10)}
               </li>
-              <li className="list-group-item">{state.source.name}</li>
-
-              <div>
+              <li className="list-group-item ">{state.source.name}</li>
+              <li className="list-group-item ">
                 <button
                   onClick={() => navigate("/")}
                   // onClick={() => navigate(-1)}
@@ -46,21 +49,26 @@ const DetailPage = () => {
                   Home
                 </button>
                 <button
-                  onClick={()=>handleFavourite(state)}
-                  
+                  onClick={() => handleFavourite(state)}
                   className="btn btn-success ms-3 "
                 >
                   Add Favourite
                 </button>
-                <li className="list-group-item ">
-                <div  className="link text-decoration-underline" onClick={()=>navigate("/articles",{state:state.url})}>News Source</div>
               </li>
-              </div>
+              <Share state={state} />
+
+              <li className="list-group-item ">
+                <div
+                  className="link text-decoration-underline"
+                  onClick={() => navigate("/articles", { state: state.url })}
+                >
+                  News Source
+                </div>
+              </li>
             </ul>
           </div>
         </div>
       </div>
-    
     </div>
   );
 };
